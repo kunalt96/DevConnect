@@ -4,8 +4,8 @@
   "description": "social network for developers",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
-    "server":"nodemon server"
+    "start": "nodemon server",
+    "server": "nodemon server"
   },
   "author": "Kunal Tiwari",
   "license": "MIT",
