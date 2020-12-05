@@ -19,5 +19,5 @@ app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/post', require('./routes/api/post'));
 
 app.listen(PORT, () => {
-  console.log('Server Started at 5000');
+  console.log(`Server Started at ${PORT}`);
 });
