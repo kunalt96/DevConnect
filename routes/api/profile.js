@@ -88,4 +88,31 @@ router.post(
   }
 );
 
+router.get('/', async (req, res, next) => {
+  try {
+    console.log('Hi');
+    const profiles = await Profile.find().populate('user', ['name', 'email']);
+    res.send(profiles);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err.message);
+  }
+});
+
+router.get('/user/:userId', async (req, res, next) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.params.userId,
+    }).populate('user', ['name']);
+    if (!profile)
+      return res.status(400).json({ msg: 'There is no profile for this user' });
+    res.json(profile);
+  } catch (err) {
+    console.log(err.message);
+    if (err.kind == 'ObjectId')
+      return res.status(400).json({ msg: 'There is no profile for this user' });
+    res.status(500).send(err.message);
+  }
+});
+
 module.exports = router;
