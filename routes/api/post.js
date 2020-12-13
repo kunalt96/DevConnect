@@ -35,4 +35,48 @@ router.post(
   }
 );
 
+router.get('/', auth, async (req, res) => {
+  try {
+    const post = await Post.find().sort({ date: -1 });
+    if (post.length < 1) return res.status(404).send('Post not found');
+    res.json(post);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+router.get('/:id', auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (post) return res.json(post);
+    res.status(404).send('Post Not available');
+  } catch (err) {
+    console.log(err.message);
+    if (err.kind === 'ObjectId') {
+      res.status(404).send('Post Not available');
+    }
+    res.status(500).send('Server error');
+  }
+});
+
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).send('Post not found');
+    if (post.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+
+    await post.remove();
+    res.json('Post removed');
+  } catch (err) {
+    console.log(err.message);
+    if (err.kind === 'ObjectId') {
+      res.status(404).send('Post Not available');
+    }
+    res.status(500).send('Server error');
+  }
+});
+
 module.exports = router;
