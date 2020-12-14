@@ -44,7 +44,7 @@ const Login = () => {
         <input type='submit' class='btn btn-primary' value='Login' />
       </form>
       <p class='my-1'>
-        Don't have an account? <Link to='/'>Sign Up</Link>
+        Don't have an account? <Link to='/register'>Sign Up</Link>
       </p>
     </Fragment>
   );
