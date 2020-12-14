@@ -15,10 +15,12 @@ const App = () => {
         <Route exact path='/' component={Landing} />
 
         <Switch>
-          <section className='container'>
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/login' component={Login} />
-          </section>
+          <React.Fragment>
+            <section className='container'>
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+            </section>
+          </React.Fragment>
         </Switch>
       </Fragment>
     </Router>
