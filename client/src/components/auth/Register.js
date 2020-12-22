@@ -85,7 +85,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   );
 };
 
-Register.prototype = {
+Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
