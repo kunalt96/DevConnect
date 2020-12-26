@@ -50,7 +50,7 @@ router.post(
       instagram,
       linkedlin,
     } = req.body;
-
+    console.log(skills);
     const profileFields = {};
     profileFields.user = req.user.id;
     if (company) profileFields.company = company;

@@ -26,12 +26,15 @@ export const createProfile = (formData, history, edit = false) => async (
         'Content-Type': 'application/json',
       },
     };
+    console.log('I am called', edit, formData);
     const res = await axios.post('/api/profile', formData, config);
+    console.log('swsasas', res);
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
     });
-    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created'));
+
+    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
 
     if (!edit) history.push('/dashboard');
   } catch (err) {
