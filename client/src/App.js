@@ -9,6 +9,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
 import CreateProfile from './components/profile-forms/CreateProfile';
 import EditProfile from './components/profile-forms/EditProfile';
+import AddExperience from './components/profile-forms/AddExperience';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -16,6 +17,7 @@ import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import AddEducation from './components/profile-forms/AddEducation';
 
 // To run once app loaded for user
 if (localStorage.getItem('token')) {
@@ -52,6 +54,16 @@ const App = () => {
                   path='/edit-profile'
                   component={EditProfile}
                 />
+                <PrivateRoute
+                  exact
+                  path='/add-experience'
+                  component={AddExperience}
+                ></PrivateRoute>
+                <PrivateRoute
+                  exact
+                  path='/add-education'
+                  component={AddEducation}
+                ></PrivateRoute>
               </React.Fragment>
             </Switch>
           </section>
