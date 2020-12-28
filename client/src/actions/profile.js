@@ -11,6 +11,7 @@ import {
 } from './types';
 
 export const getCurrentProfile = () => async (dispatch) => {
+  // dispatch({ type: CLEAR_PROFILE });
   try {
     const res = await axios.get('/api/profile/me');
     dispatch({
@@ -82,7 +83,6 @@ export const createProfile = (formData, history, edit = false) => async (
     };
     console.log('I am called', edit, formData);
     const res = await axios.post('/api/profile', formData, config);
-    console.log('swsasas', res);
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
@@ -204,7 +204,7 @@ export const deleteAccount = () => async (dispatch) => {
   console.log('hello');
   if (window.confirm('Are you sure? This cannot be undone')) {
     try {
-      const res = await axios.delete(`/api/profile/`);
+      await axios.delete(`/api/profile/`);
       dispatch({
         type: CLEAR_PROFILE,
       });

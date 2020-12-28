@@ -87,7 +87,6 @@ const AddExperience = ({ addExperience, history }) => {
                 toggleDisabled(!toDateDisabled);
               }}
               name='current'
-              value=''
             />{' '}
             Current Job
           </p>

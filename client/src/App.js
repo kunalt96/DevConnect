@@ -18,6 +18,7 @@ import setAuthToken from './utils/setAuthToken';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AddEducation from './components/profile-forms/AddEducation';
+import Profiles from './components/profiles/Profiles';
 
 // To run once app loaded for user
 if (localStorage.getItem('token')) {
@@ -43,6 +44,7 @@ const App = () => {
               <React.Fragment>
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
+                <Route exact path='/profiles' component={Profiles} />
                 <PrivateRoute exact path='/dashboard' component={Dashboard} />
                 <PrivateRoute
                   exact

@@ -95,7 +95,6 @@ const AddEducation = ({ addEducation, history }) => {
                 toggleDisabled(!toDateDisabled);
               }}
               name='current'
-              value=''
             />{' '}
             Current Degree/Programme
           </p>
