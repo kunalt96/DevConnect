@@ -7,7 +7,7 @@ const Landing = ({ isAuthenticated }) => {
   console.log('Here', isAuthenticated);
 
   if (isAuthenticated) {
-    // console.log('Here----');
+    console.log('Here----');
     return <Redirect to='/dashboard' />;
   }
 
