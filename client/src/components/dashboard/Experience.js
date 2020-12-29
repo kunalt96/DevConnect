@@ -7,28 +7,31 @@ import { deleteExperince } from '../../actions/profile';
 const Experience = ({ experience, deleteExperince }) => {
   console.log('Experience here', experience);
 
-  const experiences = experience.map((exp) => (
-    <tr key={exp._id}>
-      <td>{exp.company}</td>
-      <td className='hide-sm'>{exp.title}</td>
-      <td>
-        <Moment format='YYYY/MM/DD'>{exp.from}</Moment> -{' '}
-        {exp.to === null ? (
-          'Now'
-        ) : (
-          <Moment format='YYYY/MM/DD'>{exp.to}</Moment>
-        )}
-      </td>
-      <td>
-        <button
-          onClick={() => deleteExperince(exp._id)}
-          className='btn btn-danger'
-        >
-          Delete
-        </button>
-      </td>
-    </tr>
-  ));
+  const experiences = experience.map((exp) => {
+    console.log('HEREEE', exp.to);
+    return (
+      <tr key={exp._id}>
+        <td>{exp.company}</td>
+        <td className='hide-sm'>{exp.title}</td>
+        <td>
+          <Moment format='YYYY/MM/DD'>{exp.from}</Moment> -{' '}
+          {exp.to === null ? (
+            'Now'
+          ) : (
+            <Moment format='YYYY/MM/DD'>{exp.to}</Moment>
+          )}
+        </td>
+        <td>
+          <button
+            onClick={() => deleteExperince(exp._id)}
+            className='btn btn-danger'
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    );
+  });
 
   return (
     <>
