@@ -10,6 +10,8 @@ const Profiles = ({ profile: { profiles, loading }, getProfiles }) => {
     getProfiles();
   }, [getProfiles]);
 
+  console.log('Babbannnnnnn');
+
   return (
     <>
       {loading ? (
@@ -46,6 +48,7 @@ Profiles.propTypes = {
 
 const mapStateToProps = (state) => ({
   profile: state.profile,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { getProfiles })(Profiles);
