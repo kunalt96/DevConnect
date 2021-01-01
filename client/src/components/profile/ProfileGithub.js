@@ -49,7 +49,7 @@ const ProfileGithub = ({ username, getGithubRepos, repos }) => {
 };
 
 ProfileGithub.propTypes = {
-  get: PropTypes.func.isRequired,
+  getGithubRepos: PropTypes.func.isRequired,
   repos: PropTypes.array.isRequired,
   username: PropTypes.string.isRequired,
 };

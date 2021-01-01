@@ -14,7 +14,7 @@ const Profiles = ({ profile: { profiles, loading }, getProfiles }) => {
 
   return (
     <>
-      {loading ? (
+      {loading && profiles ? (
         <Spinner></Spinner>
       ) : (
         <>
