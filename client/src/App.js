@@ -20,6 +20,7 @@ import setAuthToken from './utils/setAuthToken';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AddEducation from './components/profile-forms/AddEducation';
 import Profiles from './components/profiles/Profiles';
+import Posts from './components/posts/Posts';
 
 // To run once app loaded for user
 if (localStorage.getItem('token')) {
@@ -67,6 +68,11 @@ const App = () => {
                   exact
                   path='/add-education'
                   component={AddEducation}
+                ></PrivateRoute>
+                <PrivateRoute
+                  exact
+                  path='/posts'
+                  component={Posts}
                 ></PrivateRoute>
               </React.Fragment>
             </Switch>

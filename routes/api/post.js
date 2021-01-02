@@ -38,6 +38,7 @@ router.post(
 router.get('/', auth, async (req, res) => {
   try {
     const post = await Post.find().sort({ date: -1 });
+    console.log('YIPEE', post);
     if (post.length < 1) return res.status(404).send('Post not found');
     res.json(post);
   } catch (err) {
