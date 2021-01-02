@@ -84,11 +84,12 @@ router.delete('/:id', auth, async (req, res) => {
 router.put('/like/:id', auth, async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    let data = post.likes.filter((like) => {
-      console.log(like.user.toString() === req.user.id);
-    });
+    console.log(post);
+    // let data = post.likes.filter((like) => {
+    //   like.user.toString() === req.user.id;
+    // });
 
-    console.log(data);
+    // console.log('AAAAAAAAAAAAAAAAAAAAAAA', data);
     if (
       post.likes.filter((like) => {
         return like.user.toString() === req.user.id;
@@ -98,6 +99,7 @@ router.put('/like/:id', auth, async (req, res) => {
     }
     post.likes.unshift({ user: req.user.id });
     await post.save();
+    console.log('assss', post.likes);
     res.json(post.likes);
   } catch (err) {
     console.log(err.message);
