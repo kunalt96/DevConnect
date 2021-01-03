@@ -21,6 +21,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AddEducation from './components/profile-forms/AddEducation';
 import Profiles from './components/profiles/Profiles';
 import Posts from './components/posts/Posts';
+import Post from './components/post/Post';
 
 // To run once app loaded for user
 if (localStorage.getItem('token')) {
@@ -73,6 +74,11 @@ const App = () => {
                   exact
                   path='/posts'
                   component={Posts}
+                ></PrivateRoute>
+                <PrivateRoute
+                  exact
+                  path='/post/:id'
+                  component={Post}
                 ></PrivateRoute>
               </React.Fragment>
             </Switch>
