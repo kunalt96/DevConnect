@@ -14,7 +14,6 @@ import setAuthToken from '../utils/setAuthToken';
 
 // Loading register user
 export const loadUser = () => async (dispatch) => {
-  console.log('In here');
   if (localStorage.getItem('token')) {
     setAuthToken(localStorage.getItem('token'));
   }
