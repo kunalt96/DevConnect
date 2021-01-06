@@ -45,7 +45,7 @@ const EditProfile = ({
       linkedlin: loading || !profile.social ? '' : profile.social.linkedlin,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
     });
-  }, [loading]);
+  }, [getCurrentProfile]);
 
   const {
     company,
