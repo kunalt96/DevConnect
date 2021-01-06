@@ -8,9 +8,6 @@ const PrivateRoute = ({
   auth: { isAuthenticated, loading },
   ...rest
 }) => {
-  console.log('QWERTY');
-  console.log(isAuthenticated, loading);
-
   return (
     <Route
       {...rest}
