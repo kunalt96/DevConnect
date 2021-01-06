@@ -15,6 +15,7 @@ import Posts from '../posts/Posts';
 import Post from '../post/Post';
 import NotFound from '../layout/NotFound';
 
+// Loading all routes to clean up appjs and provide path
 const Routes = () => {
   return (
     <section className='container'>

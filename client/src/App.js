@@ -15,8 +15,6 @@ if (localStorage.getItem('token')) {
 }
 
 const App = () => {
-  // call load user using dispath as we have access to global store here
-  // To be called only once - when app is loaded in the screen
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
