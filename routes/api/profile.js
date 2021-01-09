@@ -134,6 +134,8 @@ router.get('/', async (req, res, next) => {
   try {
     console.log('Hi');
     const profiles = await Profile.find().populate('user', ['name', 'email']);
+    console.log('-------------------------------------');
+    console.log(profiles);
     res.send(profiles);
   } catch (err) {
     console.log(err);

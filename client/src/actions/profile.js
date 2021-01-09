@@ -45,14 +45,17 @@ export const getProfiles = () => async (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
   try {
     const res = await axios.get('/api/profile');
+    console.log(res);
     dispatch({
       type: GET_PROFILES,
       payload: res.data,
     });
   } catch (err) {
+    console.log('qqqqqqqqqqqqqqqqqqq');
+    console.log(err);
     dispatch({
       type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.response, status: err.response },
     });
   }
 };
