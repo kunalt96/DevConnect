@@ -39,6 +39,7 @@ router.post(
       req.file.filename
     );
     cloudinary.v2.uploader.upload(imgPath, (err, result) => {
+      console.log(result, err);
       res.send(result.secure_url);
     });
   }
