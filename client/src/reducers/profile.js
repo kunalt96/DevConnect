@@ -5,6 +5,7 @@ import {
   UPDATE_PROFILE,
   GET_PROFILES,
   GET_REPOS,
+  UPLOAD_IMAGE,
 } from '../actions/types';
 
 const initalState = {
@@ -23,6 +24,12 @@ export default function (state = initalState, action) {
       return { ...state, profile: payload, loading: false };
     case GET_PROFILES:
       return { ...state, profiles: payload, loading: false };
+    case UPLOAD_IMAGE:
+      return {
+        ...state,
+        profile: { ...state.profile, profilePicUrl: payload },
+        loading: false,
+      };
     case GET_REPOS:
       return { ...state, repos: payload, loading: false };
     case PROFILE_ERROR:

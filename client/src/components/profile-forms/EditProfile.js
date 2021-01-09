@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { createProfile, getCurrentProfile } from '../../actions/profile';
+import {
+  createProfile,
+  getCurrentProfile,
+  uploadImageToBackend,
+} from '../../actions/profile';
 
 const EditProfile = ({
   profile: { profile, loading },
   createProfile,
   history,
   getCurrentProfile,
+  uploadImageToBackend,
 }) => {
   const [formData, setFormData] = useState({
     company: '',
@@ -23,7 +28,10 @@ const EditProfile = ({
     twitter: '',
     instagram: '',
     linkedlin: '',
+    profilePicUrl: '',
   });
+
+  const [imageData, setImage] = useState(null);
 
   const [displaySocialInputs, toggleSocialInput] = useState(false);
 
@@ -44,6 +52,8 @@ const EditProfile = ({
       facebook: loading || !profile.social ? '' : profile.social.facebook,
       linkedlin: loading || !profile.social ? '' : profile.social.linkedlin,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
+      profilePicUrl:
+        loading || !profile.profilePicUrl ? '' : profile.profilePicUrl,
     });
   }, [getCurrentProfile]);
 
@@ -67,7 +77,19 @@ const EditProfile = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(formData, 2);
+    let formDataDumb = formData;
+    formDataDumb.profilePicUrl = profile.profilePicUrl;
+    console.log(formDataDumb);
+    setFormData({ ...formDataDumb });
+    console.log(formData);
     createProfile(formData, history, true);
+  };
+
+  const fileUpload = () => {
+    const imageDataForm = new FormData();
+    imageDataForm.append('profilePic', imageData);
+    uploadImageToBackend(imageDataForm);
   };
 
   return (
@@ -79,6 +101,25 @@ const EditProfile = ({
       </p>
       <small>* = required field</small>
       <form onSubmit={(e) => onSubmit(e)} className='form'>
+        <div className='form-group'>
+          <input
+            name='profilePic'
+            type='file'
+            onChange={(e) => {
+              setImage(e.target.files[0]);
+              console.log(e.target.files[0]);
+            }}
+          />
+          <button
+            onClick={() => {
+              fileUpload();
+            }}
+            type='button'
+            className='btn btn-primary'
+          >
+            Upload Image
+          </button>
+        </div>
         <div className='form-group'>
           <select name='status' value={status} onChange={(e) => onChange(e)}>
             <option value='0'>* Select Professional Status</option>
@@ -256,6 +297,8 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
-  withRouter(EditProfile)
-);
+export default connect(mapStateToProps, {
+  createProfile,
+  getCurrentProfile,
+  uploadImageToBackend,
+})(withRouter(EditProfile));

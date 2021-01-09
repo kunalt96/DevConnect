@@ -4,9 +4,45 @@ const auth = require('../../middleware/auth');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const Post = require('../../models/Post');
+const multer = require('multer');
+const path = require('path');
+var cloudinary = require('cloudinary');
+const config = require('config');
+
+cloudinary.config({
+  cloud_name: config.get('cloud_name'),
+  api_key: config.get('api_key'),
+  api_secret: config.get('api_secret'),
+});
 
 const { check, validationResult } = require('express-validator/check');
 const request = require('request');
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './upload');
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.user.id + path.extname(file.originalname));
+  },
+});
+const upload = multer({ storage: storage });
+
+router.post(
+  '/upload',
+  [auth, upload.single('profilePic')],
+  (req, res, next) => {
+    let imgPath = path.resolve(
+      __dirname,
+      '../../',
+      'upload',
+      req.file.filename
+    );
+    cloudinary.v2.uploader.upload(imgPath, (err, result) => {
+      res.send(result.secure_url);
+    });
+  }
+);
 
 // @route GET api/profile
 // @desc  Test route
@@ -51,6 +87,7 @@ router.post(
       twitter,
       instagram,
       linkedlin,
+      profilePicUrl,
     } = req.body;
     console.log(skills);
     const profileFields = {};
@@ -61,6 +98,7 @@ router.post(
     if (bio) profileFields.bio = bio;
     if (status) profileFields.status = status;
     if (githubusername) profileFields.githubusername = githubusername;
+    if (profilePicUrl) profileFields.profilePicUrl = profilePicUrl;
     if (skills)
       profileFields.skills = skills.split(',').map((value) => value.trim());
 

@@ -8,12 +8,14 @@ import {
   UPDATE_PROFILE,
   CLEAR_PROFILE,
   GET_REPOS,
+  UPLOAD_IMAGE,
 } from './types';
 
 export const getCurrentProfile = () => async (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
   try {
     const res = await axios.get('/api/profile/me');
+    console.log(res.data);
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
@@ -23,6 +25,19 @@ export const getCurrentProfile = () => async (dispatch) => {
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
+  }
+};
+
+export const uploadImageToBackend = (formData) => async (dispatch) => {
+  try {
+    const res = await axios.post('/api/profile/upload', formData);
+    console.log(res);
+    dispatch({
+      type: UPLOAD_IMAGE,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.log(err);
   }
 };
 

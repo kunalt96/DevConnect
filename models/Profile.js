@@ -8,6 +8,9 @@ const ProfileSchema = new mongoose.Schema({
   company: {
     type: String,
   },
+  profilePicUrl: {
+    type: String,
+  },
   website: {
     type: String,
   },

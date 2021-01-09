@@ -10,11 +10,16 @@ const ProfileItem = ({
     company,
     location,
     skills,
+    profilePicUrl,
   },
 }) => {
   return (
     <div className='profile bg-light'>
-      <img alt='user-avatar' src={Avatar} className='round-img' />
+      <img
+        alt='user-avatar'
+        src={profilePicUrl ? profilePicUrl : Avatar}
+        className='round-img'
+      />
       <div>
         <h2>{name}</h2>
         <p>

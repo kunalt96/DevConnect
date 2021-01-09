@@ -1,4 +1,7 @@
 {
   "mongoURI": "mongodb+srv://kunal1996:kunal1996@devconnector.gtp0t.mongodb.net/devConnector?retryWrites=true&w=majority",
-  "jwtSecret": "mysecrettoken"
+  "jwtSecret": "mysecrettoken",
+  "cloud_name": "devkonnector",
+  "api_key": 259129453527852,
+  "api_secret": "_t3LNpcFQjpol84j8Jsgyx6Ej7Y"
 }

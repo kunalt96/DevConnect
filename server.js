@@ -12,6 +12,7 @@ connectDB();
 
 // Body pareser provided by express
 app.use(express.json({ extended: false }));
+app.use(express.static('upload'));
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '../../img/avatar.jpg';
+// import profile from '../../reducers/profile';
 
 const ProfileTop = ({
   profile: {
@@ -9,12 +10,15 @@ const ProfileTop = ({
     location,
     website,
     social,
+    profilePicUrl,
     user: { name },
   },
 }) => {
+  console.log(profilePicUrl);
+
   return (
     <div className='profile-top bg-primary p-2'>
-      <img className='round-img my-1' src={Avatar} alt='' />
+      <img className='round-img my-1' src={profilePicUrl} />
       <h1 className='large'>{name}</h1>
       <p className='lead'>
         {status} {company && <span> at {company}</span>}
