@@ -2,18 +2,16 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import {
-  createProfile,
-  getCurrentProfile,
-  uploadImageToBackend,
-} from '../../actions/profile';
+import { createProfile, getCurrentProfile } from '../../actions/profile';
+import { setAlert } from '../../actions/alert';
+import axios from 'axios';
 
 const EditProfile = ({
   profile: { profile, loading },
   createProfile,
   history,
+  setAlert,
   getCurrentProfile,
-  uploadImageToBackend,
 }) => {
   const [formData, setFormData] = useState({
     company: '',
@@ -29,6 +27,7 @@ const EditProfile = ({
     instagram: '',
     linkedlin: '',
     profilePicUrl: '',
+    public_id: '',
   });
 
   const [imageData, setImage] = useState(null);
@@ -53,7 +52,9 @@ const EditProfile = ({
       linkedlin: loading || !profile.social ? '' : profile.social.linkedlin,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
       profilePicUrl:
-        loading || !profile.profilePicUrl ? '' : profile.profilePicUrl,
+        loading || !profile.profilePic ? '' : profile.profilePic.profilePicUrl,
+      public_id:
+        loading || !profile.profilePic ? '' : profile.profilePic.public_id,
     });
   }, [getCurrentProfile]);
 
@@ -70,6 +71,8 @@ const EditProfile = ({
     twitter,
     instagram,
     linkedlin,
+    profilePicUrl,
+    public_id,
   } = formData;
 
   const onChange = (e) =>
@@ -78,18 +81,25 @@ const EditProfile = ({
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(formData, 2);
-    let formDataDumb = formData;
-    formDataDumb.profilePicUrl = profile.profilePicUrl;
-    console.log(formDataDumb);
-    setFormData({ ...formDataDumb });
-    console.log(formData);
     createProfile(formData, history, true);
   };
 
-  const fileUpload = () => {
+  const fileUpload = async () => {
     const imageDataForm = new FormData();
     imageDataForm.append('profilePic', imageData);
-    uploadImageToBackend(imageDataForm);
+    try {
+      const res = await axios.post('/api/profile/upload', imageDataForm);
+      console.log(res.data);
+      setFormData({
+        ...formData,
+        profilePicUrl: res.data.secure_url,
+        public_id: res.data.public_id,
+      });
+      setAlert('Yo! You got a profile pic', 'success');
+    } catch (err) {
+      console.log(err);
+      setAlert('Image not uploaded', 'danger');
+    }
   };
 
   return (
@@ -103,6 +113,7 @@ const EditProfile = ({
       <form onSubmit={(e) => onSubmit(e)} className='form'>
         <div className='form-group'>
           <input
+            className='form-control'
             name='profilePic'
             type='file'
             onChange={(e) => {
@@ -120,6 +131,12 @@ const EditProfile = ({
             Upload Image
           </button>
         </div>
+        {profilePicUrl ? (
+          <p>You can edit and Upload new Pic</p>
+        ) : (
+          <p>It seems there is no profile, Do update one</p>
+        )}
+        {profilePicUrl}
         <div className='form-group'>
           <select name='status' value={status} onChange={(e) => onChange(e)}>
             <option value='0'>* Select Professional Status</option>
@@ -300,5 +317,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   createProfile,
   getCurrentProfile,
-  uploadImageToBackend,
+  setAlert,
 })(withRouter(EditProfile));

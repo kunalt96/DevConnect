@@ -13,15 +13,3 @@ export const setAlert = (msg, alertType) => (dispatch) => {
     dispatch({ type: REMOVE_ALERT, payload: id });
   }, 4000);
 };
-
-// export const setAlert = ()=>{
-//   return async
-// }
-
-// export const setAller = (msg, alertType) => {
-//   const id = uuid();
-//   return {
-//     type: SET_ALERT,
-//     payload: { msg, alertType, id },
-//   };
-// };

@@ -8,6 +8,7 @@ const multer = require('multer');
 const path = require('path');
 var cloudinary = require('cloudinary');
 const config = require('config');
+const fs = require('fs');
 
 cloudinary.config({
   cloud_name: config.get('cloud_name'),
@@ -31,15 +32,28 @@ const upload = multer({ storage: storage });
 router.post(
   '/upload',
   [auth, upload.single('profilePic')],
-  (req, res, next) => {
+  async (req, res, next) => {
     let imgPath = path.resolve(
       __dirname,
       '../../',
       'upload',
       req.file.filename
     );
+    fileNames = fs.readdirSync(path.resolve(__dirname, '../../', 'upload'));
+    console.log(fileNames);
     cloudinary.v2.uploader.upload(imgPath, (err, result) => {
-      res.send(result.secure_url);
+      if (result) {
+        console.log(result);
+        fs.unlinkSync(
+          path.resolve(__dirname, '../../', 'upload', req.file.filename)
+        );
+        fileNames = fs.readdirSync(path.resolve(__dirname, '../../', 'upload'));
+        console.log(fileNames);
+        res.send(result);
+      } else {
+        console.log(err);
+        res.send(err.message).status(500);
+      }
     });
   }
 );
@@ -88,6 +102,7 @@ router.post(
       instagram,
       linkedlin,
       profilePicUrl,
+      public_id,
     } = req.body;
     console.log(skills);
     const profileFields = {};
@@ -98,9 +113,12 @@ router.post(
     if (bio) profileFields.bio = bio;
     if (status) profileFields.status = status;
     if (githubusername) profileFields.githubusername = githubusername;
-    if (profilePicUrl) profileFields.profilePicUrl = profilePicUrl;
     if (skills)
       profileFields.skills = skills.split(',').map((value) => value.trim());
+
+    profileFields.profilePic = {};
+    if (profilePicUrl) profileFields.profilePic.profilePicUrl = profilePicUrl;
+    if (profilePicUrl) profileFields.profilePic.public_id = public_id;
 
     profileFields.social = {};
     if (youtube) profileFields.social.youtube = youtube;

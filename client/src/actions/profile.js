@@ -8,7 +8,6 @@ import {
   UPDATE_PROFILE,
   CLEAR_PROFILE,
   GET_REPOS,
-  UPLOAD_IMAGE,
 } from './types';
 
 export const getCurrentProfile = () => async (dispatch) => {
@@ -25,19 +24,6 @@ export const getCurrentProfile = () => async (dispatch) => {
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
-  }
-};
-
-export const uploadImageToBackend = (formData) => async (dispatch) => {
-  try {
-    const res = await axios.post('/api/profile/upload', formData);
-    console.log(res);
-    dispatch({
-      type: UPLOAD_IMAGE,
-      payload: res.data,
-    });
-  } catch (err) {
-    console.log(err);
   }
 };
 
@@ -99,15 +85,12 @@ export const createProfile = (formData, history, edit = false) => async (
         'Content-Type': 'application/json',
       },
     };
-    console.log('I am called', edit, formData);
     const res = await axios.post('/api/profile', formData, config);
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
     });
-
     dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
-
     if (!edit) history.push('/dashboard');
   } catch (err) {
     const errors = err.response.data.errors;
@@ -116,7 +99,6 @@ export const createProfile = (formData, history, edit = false) => async (
         dispatch(setAlert(element.msg, 'danger'));
       });
     }
-
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },

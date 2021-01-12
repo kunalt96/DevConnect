@@ -10,15 +10,15 @@ const ProfileTop = ({
     location,
     website,
     social,
-    profilePicUrl,
+    profilePic,
     user: { name },
   },
 }) => {
-  console.log(profilePicUrl);
+  // console.log(profilePicUrl);
 
   return (
     <div className='profile-top bg-primary p-2'>
-      <img className='round-img my-1' src={profilePicUrl} />
+      <img className='round-img my-1' src={profilePic.profilePicUrl} />
       <h1 className='large'>{name}</h1>
       <p className='lead'>
         {status} {company && <span> at {company}</span>}

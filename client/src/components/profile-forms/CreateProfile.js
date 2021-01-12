@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { createProfile } from '../../actions/profile';
+import { setAlert } from '../../actions/alert';
+import axios from 'axios';
 
-const CreateProfile = ({ createProfile, history }) => {
+const CreateProfile = ({ createProfile, history, setAlert }) => {
   const [formData, setFormData] = useState({
     company: '',
     website: '',
@@ -18,8 +20,11 @@ const CreateProfile = ({ createProfile, history }) => {
     twitter: '',
     instagram: '',
     linkedlin: '',
+    profilePicUrl: '',
+    public_id: '',
   });
 
+  const [imageData, setImage] = useState(null);
   const [displaySocialInputs, toggleSocialInput] = useState(false);
 
   const {
@@ -35,6 +40,7 @@ const CreateProfile = ({ createProfile, history }) => {
     twitter,
     instagram,
     linkedlin,
+    profilePicUrl,
   } = formData;
 
   const onChange = (e) =>
@@ -42,8 +48,25 @@ const CreateProfile = ({ createProfile, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(history);
+    console.log(formData);
     createProfile(formData, history);
+  };
+
+  const fileUpload = async () => {
+    const imageDataForm = new FormData();
+    imageDataForm.append('profilePic', imageData);
+    try {
+      const res = await axios.post('/api/profile/upload', imageDataForm);
+      setFormData({
+        ...formData,
+        profilePicUrl: res.data.secure_url,
+        public_id: res.data.public_id,
+      });
+      setAlert('Yo! You got a profile pic', 'success');
+    } catch (err) {
+      console.log(err);
+      setAlert('Image not uploaded', 'danger');
+    }
   };
 
   return (
@@ -55,6 +78,25 @@ const CreateProfile = ({ createProfile, history }) => {
       </p>
       <small>* = required field</small>
       <form onSubmit={(e) => onSubmit(e)} className='form'>
+        <div className='form-group'>
+          <input
+            name='profilePic'
+            type='file'
+            onChange={(e) => {
+              setImage(e.target.files[0]);
+              console.log(e.target.files[0]);
+            }}
+          />
+          <button
+            onClick={() => {
+              fileUpload();
+            }}
+            type='button'
+            className='btn btn-primary'
+          >
+            Upload Image
+          </button>
+        </div>
         <div className='form-group'>
           <select name='status' value={status} onChange={(e) => onChange(e)}>
             <option value='0'>* Select Professional Status</option>
@@ -226,4 +268,6 @@ CreateProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
 };
 
-export default connect(null, { createProfile })(withRouter(CreateProfile));
+export default connect(null, { createProfile, setAlert })(
+  withRouter(CreateProfile)
+);
