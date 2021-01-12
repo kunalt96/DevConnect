@@ -1,1 +1,7 @@
 Just for testing
+Req need to be implemented before Friday/Saturday deployment
+1)Profile pic deletion
+2)Check image size before uploading and also iamge types as well
+3)Reduce the image full display size for better view and ux
+4)Improve the ui for file uploading
+5)Add spinner which shows loading of spinner here..

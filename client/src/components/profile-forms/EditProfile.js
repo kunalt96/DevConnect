@@ -132,11 +132,13 @@ const EditProfile = ({
           </button>
         </div>
         {profilePicUrl ? (
-          <p>You can edit and Upload new Pic</p>
+          <p className='lead'>
+            You can edit and Upload new Pic. Click on Submit to view changes
+          </p>
         ) : (
           <p>It seems there is no profile, Do update one</p>
         )}
-        {profilePicUrl}
+
         <div className='form-group'>
           <select name='status' value={status} onChange={(e) => onChange(e)}>
             <option value='0'>* Select Professional Status</option>
