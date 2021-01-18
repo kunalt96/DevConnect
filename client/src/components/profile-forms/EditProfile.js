@@ -31,6 +31,7 @@ const EditProfile = ({
   });
 
   const [imageData, setImage] = useState(null);
+  const [loadSpinner, setSpinner] = useState(false);
 
   const [displaySocialInputs, toggleSocialInput] = useState(false);
 
@@ -96,6 +97,7 @@ const EditProfile = ({
         public_id: res.data.public_id,
       });
       setAlert('Yo! You got a profile pic', 'success');
+      setSpinner(false);
     } catch (err) {
       console.log(err);
       setAlert('Image not uploaded', 'danger');
@@ -110,6 +112,17 @@ const EditProfile = ({
         profile stand out
       </p>
       <small>* = required field</small>
+      <br />
+      {loadSpinner ? (
+        <div class='lds-ripple'>
+          <div></div>
+          <div></div>
+        </div>
+      ) : (
+        <></>
+      )}
+      {/* <div className='loader'></div> */}
+
       <form onSubmit={(e) => onSubmit(e)} className='form'>
         <div className='form-group'>
           <input
@@ -123,6 +136,7 @@ const EditProfile = ({
           />
           <button
             onClick={() => {
+              setSpinner(true);
               fileUpload();
             }}
             type='button'
