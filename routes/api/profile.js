@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
+const upload = require('../../middleware/upload');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const Post = require('../../models/Post');
-const multer = require('multer');
+const { check, validationResult } = require('express-validator/check');
+const request = require('request');
 const path = require('path');
 var cloudinary = require('cloudinary');
 const config = require('config');
@@ -15,48 +17,25 @@ cloudinary.config({
   api_key: config.get('api_key'),
   api_secret: config.get('api_secret'),
 });
-
-const { check, validationResult } = require('express-validator/check');
-const request = require('request');
-
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './upload');
-  },
-  filename: function (req, file, cb) {
-    cb(null, req.user.id + path.extname(file.originalname));
-  },
+router.post('/upload', [auth, upload], async (req, res, next) => {
+  let imgPath = path.resolve(__dirname, '../../', 'upload', req.file.filename);
+  fileNames = fs.readdirSync(path.resolve(__dirname, '../../', 'upload'));
+  console.log(fileNames);
+  cloudinary.v2.uploader.upload(imgPath, (err, result) => {
+    if (result) {
+      console.log(result);
+      fs.unlinkSync(
+        path.resolve(__dirname, '../../', 'upload', req.file.filename)
+      );
+      // fileNames = fs.readdirSync(path.resolve(__dirname, '../../', 'upload'));
+      // console.log(fileNames);
+      res.send(result);
+    } else {
+      console.log(err);
+      res.send(err.message).status(500);
+    }
+  });
 });
-const upload = multer({ storage: storage });
-
-router.post(
-  '/upload',
-  [auth, upload.single('profilePic')],
-  async (req, res, next) => {
-    let imgPath = path.resolve(
-      __dirname,
-      '../../',
-      'upload',
-      req.file.filename
-    );
-    fileNames = fs.readdirSync(path.resolve(__dirname, '../../', 'upload'));
-    console.log(fileNames);
-    cloudinary.v2.uploader.upload(imgPath, (err, result) => {
-      if (result) {
-        console.log(result);
-        fs.unlinkSync(
-          path.resolve(__dirname, '../../', 'upload', req.file.filename)
-        );
-        fileNames = fs.readdirSync(path.resolve(__dirname, '../../', 'upload'));
-        console.log(fileNames);
-        res.send(result);
-      } else {
-        console.log(err);
-        res.send(err.message).status(500);
-      }
-    });
-  }
-);
 
 // @route GET api/profile
 // @desc  Test route
