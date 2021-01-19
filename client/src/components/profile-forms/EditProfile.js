@@ -101,6 +101,25 @@ const EditProfile = ({
     } catch (err) {
       console.log(err);
       setAlert('Image not uploaded', 'danger');
+      setSpinner(false);
+    }
+  };
+
+  const removeProfilePic = async () => {
+    console.log(public_id);
+    try {
+      axios.delete(`/api/profile/removePic/${public_id}`);
+      setFormData({
+        ...formData,
+        profilePicUrl: null,
+        public_id: null,
+      });
+      setAlert('Profile Pic removed', 'success');
+      setSpinner(false);
+    } catch (err) {
+      console.log(err);
+      setAlert('Image not uploaded', 'danger');
+      setSpinner(false);
     }
   };
 
@@ -144,10 +163,21 @@ const EditProfile = ({
           >
             Upload Image
           </button>
+          {profilePicUrl && (
+            <button
+              onClick={() => {
+                setSpinner(true);
+                removeProfilePic();
+              }}
+              className='btn btn-danger'
+            >
+              Remove Profile Pic
+            </button>
+          )}
         </div>
         {profilePicUrl ? (
           <p className='lead'>
-            You can edit and Upload new Pic. Click on Submit to view changes
+            You can Upload or Remove Pic. Click on Submit to view changes
           </p>
         ) : (
           <p>It seems there is no profile, Do update one</p>

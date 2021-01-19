@@ -32,7 +32,18 @@ router.post('/upload', [auth, upload], async (req, res, next) => {
       res.send(result);
     } else {
       console.log(err);
-      res.send(err.message).status(500);
+      res.status(500).send(err.message);
+    }
+  });
+});
+
+router.delete('/removePic/:public_id', auth, async (req, res, next) => {
+  cloudinary.v2.uploader.destroy(req.params.public_id, (err, result) => {
+    if (err) {
+      res.status(500).send(err.message);
+    } else {
+      console.log(result);
+      res.status(200).json({ msg: 'Deletion Successfull' });
     }
   });
 });
