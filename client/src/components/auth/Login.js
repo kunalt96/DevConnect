@@ -6,7 +6,6 @@ import { login } from '../../actions/auth';
 
 const Login = ({ login, isAuthenticated }) => {
   const [loginData, setLoginData] = useState({ email: '', password: '' });
-
   const { email, password } = loginData;
 
   const onChange = (e) =>
@@ -55,14 +54,13 @@ const Login = ({ login, isAuthenticated }) => {
       <p className='my-1'>
         Don't have an account? <Link to='/register'>Sign Up</Link>
       </p>
+      <p className='my-1'>
+        Forgot Password? <Link to='/reset-password'>Reset Password</Link>
+      </p>
     </Fragment>
   );
 };
 
-// Login.propTypes = {
-//   login: PropTypes.func.isRequired,
-//   isAuthenticated: PropTypes.bool,
-// };
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,

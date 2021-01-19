@@ -44,7 +44,7 @@ router.post(
       jwt.sign(
         payload,
         config.get('jwtSecret'),
-        { expiresIn: 360000 },
+        { expiresIn: 3600 },
         (error, token) => {
           if (error) throw error;
           res.json({ token });
@@ -52,6 +52,38 @@ router.post(
       );
 
       // res.send('User Registered');
+    } catch (err) {
+      console.log(err.message);
+      res.send(500).send('Server Error');
+    }
+  }
+);
+
+router.put(
+  '/forgotPassword',
+  [
+    check('email', 'Please provide email address').isEmail(),
+    check('password', 'Please enter valid password').isLength(6),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    console.log(req.body);
+    const { email, password } = req.body;
+    try {
+      let user = await User.findOne({ email });
+      console.log(user);
+      if (!user) {
+        return res
+          .status(400)
+          .json({ errors: [{ message: 'Invalid credentials' }] });
+      }
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+      await user.save();
+      res.status(200).json({ msg: 'Password changed' });
     } catch (err) {
       console.log(err.message);
       res.send(500).send('Server Error');

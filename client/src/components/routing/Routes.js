@@ -14,6 +14,7 @@ import Profiles from '../profiles/Profiles';
 import Posts from '../posts/Posts';
 import Post from '../post/Post';
 import NotFound from '../layout/NotFound';
+import ResetPassword from '../auth/ResetPassword';
 
 // Loading all routes to clean up appjs and provide path
 const Routes = () => {
@@ -23,6 +24,7 @@ const Routes = () => {
       <Switch>
         <Route exact path='/register' component={Register} />
         <Route exact path='/login' component={Login} />
+        <Route exact path='/reset-password' component={ResetPassword} />
         <Route exact path='/profiles' component={Profiles} />
         <Route exact path='/profile/:id' component={Profile} />
         <PrivateRoute exact path='/dashboard' component={Dashboard} />

@@ -8,7 +8,7 @@ import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT,
-  CLEAR_PROFILE,
+  CHANGE_PASSWORD,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -27,6 +27,31 @@ export const loadUser = () => async (dispatch) => {
     dispatch({
       type: AUTH_ERROR,
     });
+  }
+};
+
+export const resetPassword = (email, password, history) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  console.log(email, password);
+  const body = JSON.stringify({ email, password });
+  try {
+    await axios.put('/api/users/forgotPassword', body, config);
+    dispatch({
+      type: CHANGE_PASSWORD,
+    });
+    dispatch(setAlert('Password Successfully reset', 'success'));
+    history.push('/dashboard');
+  } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((element) => {
+        dispatch(setAlert(element.msg, 'danger'));
+      });
+    }
   }
 };
 
