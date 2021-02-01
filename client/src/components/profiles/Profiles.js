@@ -9,9 +9,6 @@ const Profiles = ({ profile: { profiles, loading }, getProfiles }) => {
   useEffect(() => {
     getProfiles();
   }, [getProfiles]);
-
-  console.log('Babbannnnnnn');
-
   return (
     <>
       {loading && profiles ? (

@@ -9,6 +9,8 @@ import ProfileAbout from './ProfileAbout';
 import ProfileExperience from './ProfileExperience';
 import ProfileEducation from './ProfileEducation';
 import ProfileGithub from './ProfileGithub';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import CreateResume from './CreateResume';
 
 const Profile = ({
   match,
@@ -35,6 +37,22 @@ const Profile = ({
               <Link className='btn btn-dark' to='/edit-profile'>
                 Edit Profile
               </Link>
+            )}
+          {auth.isAuthenticated &&
+            auth.loading === false &&
+            auth.user._id === profile.user._id &&
+            profile.education.length > 0 &&
+            profile.experience.length > 0 &&
+            profile.skills && (
+              <PDFDownloadLink
+                document={<CreateResume data={profile}></CreateResume>}
+                fileName={profile.user.name + '.pdf'}
+                className='btn btn-dark'
+              >
+                {({ blob, url, loading, error }) =>
+                  loading ? 'Loading document...' : 'Download Profile'
+                }
+              </PDFDownloadLink>
             )}
           <div className='profile-grid my-1'>
             <ProfileTop profile={profile}></ProfileTop>
