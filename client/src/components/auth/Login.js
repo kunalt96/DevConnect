@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -6,6 +6,9 @@ import { login } from '../../actions/auth';
 
 const Login = ({ login, isAuthenticated }) => {
   const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [inputType, setInputType] = useState('password');
+  const [visiblity, setVisibility] = useState(false);
+
   const { email, password } = loginData;
 
   const onChange = (e) =>
@@ -15,6 +18,14 @@ const Login = ({ login, isAuthenticated }) => {
     e.preventDefault();
     login(email, password);
   };
+
+  useEffect(() => {
+    if (visiblity) {
+      setInputType('text');
+    } else {
+      setInputType('password');
+    }
+  }, [visiblity]);
 
   //Redirecting is user logged in
   if (isAuthenticated) {
@@ -39,14 +50,21 @@ const Login = ({ login, isAuthenticated }) => {
             onChange={(e) => onChange(e)}
           />
         </div>
-        <div className='form-group'>
+        <div className='form-group inputContainer'>
+          <i
+            onClick={() => {
+              if (password.length > 0) setVisibility(!visiblity);
+            }}
+            className='far fa-eye icon'
+          ></i>
           <input
-            type='password'
+            type={inputType}
             placeholder='Password'
             required
             value={password}
             onChange={(e) => onChange(e)}
             name='password'
+            className='Field'
           />
         </div>
         <input type='submit' className='btn btn-primary' value='Login' />
