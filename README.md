@@ -28,3 +28,7 @@ This is the very first version of application where functionalities like Registr
 ## Version 2.0.0
 
 Version 2 Released with some latest features. These features includes like User can add profile photo or Remove the same. When viewing the profile of other user, we can view their profile pic as well. Now no need to worry for password as we have added the Forgot password where user can reset their password as well. Also code is modifed to optimized the performance of the application
+
+## Version 3.0.0
+
+Version 3 released with some latest features. These features includes Download Profile options, User can go to his profile and also download it as a PDF, if education & experience credentials are provided. Also upload profile pic is provided with some better UI enhancements & in profile section it can be viewed as well. Also there is some performance enhancements are done
