@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 /* Global Styles */
 :root {
   --primary-color: #17a2b8;
@@ -14,7 +15,7 @@
 }
 
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Muli', 'sans-serif';
   font-size: 1rem;
   line-height: 1.6;
   background-color: #fff;
@@ -124,6 +125,11 @@ img {
 }
 .my-3 {
   margin: 3rem 0;
+}
+
+input[name='searchDeveloper'] {
+  outline: none;
+  border-radius: 30px;
 }
 
 .btn {
