@@ -44,7 +44,7 @@ const Profiles = ({ profile: { profiles, loading }, getProfiles }) => {
             <div className='form-group'>
               <input
                 placeholder='Search Developers here'
-                type='text'
+                type='search'
                 name='searchDeveloper'
                 value={searchDeveloper}
                 onChange={(e) => setSearchDeveloper(e.target.value)}

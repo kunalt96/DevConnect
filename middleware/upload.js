@@ -10,7 +10,7 @@ var storage = multer.diskStorage({
   },
 });
 let fileFilter = function (req, file, cb) {
-  var allowedMimes = ['image/jpeg', 'image/jpg', 'image/png'];
+  var allowedMimes = ['image/', 'image/jpeg', 'image/jpg', 'image/png'];
   if (allowedMimes.includes(file.mimetype)) {
     cb(null, true);
   } else {
@@ -32,6 +32,7 @@ const upload = multer({
 
 module.exports = function (req, res, next) {
   upload(req, res, function (error) {
+    console.log('here', req.file);
     if (error) {
       console.log(error);
       console.log('its coming here');

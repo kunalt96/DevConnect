@@ -1,0 +1,68 @@
+.search-user {
+  width: 100%;
+  transition: width 0.4s ease-in-out;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 12px 20px 12px 10px;
+}
+
+.align-card-user {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.display-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  width: 30%;
+  margin-left: 20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.display-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container-card {
+  padding: 2px 16px;
+}
+
+div.display-card div.container-card button.btn {
+  float: left;
+  margin: 20px;
+  margin-left: 0px;
+  height: 35px;
+}
+.overlay-it {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(141, 141, 141, 0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 50px;
+  /* color: white; */
+  transform: translate(-50%, -50%);
+}
+
+div .styleSpinner {
+  display: flex;
+  height: 500px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}

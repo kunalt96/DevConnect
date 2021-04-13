@@ -15,6 +15,7 @@ import Posts from '../posts/Posts';
 import Post from '../post/Post';
 import NotFound from '../layout/NotFound';
 import ResetPassword from '../auth/ResetPassword';
+import AdminComponent from '../admin';
 
 // Loading all routes to clean up appjs and provide path
 const Routes = () => {
@@ -42,6 +43,10 @@ const Routes = () => {
         ></PrivateRoute>
         <PrivateRoute exact path='/posts' component={Posts}></PrivateRoute>
         <PrivateRoute exact path='/post/:id' component={Post}></PrivateRoute>
+        <PrivateRoute
+          path='/adminComponent'
+          component={AdminComponent}
+        ></PrivateRoute>
         <Route component={NotFound}></Route>
       </Switch>
     </section>
