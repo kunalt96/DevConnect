@@ -9,11 +9,9 @@ import './Analytics.css';
 class Analytics extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
   async componentDidMount() {
     try {
-      console.log('CALLED HERE');
       this.props.getAnalyticsData();
     } catch (err) {
       console.log(err);

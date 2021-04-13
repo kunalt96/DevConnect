@@ -32,3 +32,27 @@ Version 2 Released with some latest features. These features includes like User 
 ## Version 3.0.0
 
 Version 3 released with some latest features. These features includes Download Profile options, User can go to his profile and also download it as a PDF, if education & experience credentials are provided. Also upload profile pic is provided with some better UI enhancements & in profile section it can be viewed as well. Also there is some performance enhancements are done
+
+## Version 4.0.0
+
+Version 4 is released with some quite new features to the application. Its the biggest upgrade till now to the DevKonnector app. UI upgrades includes change of font size and colors: Its more soft now, Search bar provided to Profiles section to search for the developer by name. The major update is the Admin functionality to the application. A admin has control over the app with very important details and data visualizations. Admin functionality is divided into 4 sections as shown below:
+
+Overview:
+![overview image](https://user-images.githubusercontent.com/46222650/114573926-72347500-9c96-11eb-8072-2049491590f5.png)
+
+In this all users available with search bar, also numreric information which might be handy for the admin about the application
+
+Analytics:
+![graphs image](https://user-images.githubusercontent.com/46222650/114574023-84aeae80-9c96-11eb-89d5-22dd4f03081d.png)
+
+In this data observation throught different graphs: Line & Bar graph and Pie chart for different data for easy visualization
+
+User Add/Modification:
+![user edit and add](https://user-images.githubusercontent.com/46222650/114574132-9b550580-9c96-11eb-9e25-27f6dfc1d45a.png)
+
+A simple form to add and edit the user information present in the database
+
+Profiles:
+![profile of user](https://user-images.githubusercontent.com/46222650/114574191-a9a32180-9c96-11eb-8f73-7602d111c803.png)
+
+Profiles of users in card, more updates can be expected with respect to UI in this section in coming days, Contact functioanlity to mail the respective users

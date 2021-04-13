@@ -4,7 +4,6 @@ import ReactApexChart from 'react-apexcharts';
 class ReactChartLinePosts extends Component {
   constructor(props) {
     super(props);
-    console.log('inhere');
     this.state = {
       series: [
         {

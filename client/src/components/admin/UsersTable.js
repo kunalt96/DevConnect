@@ -12,7 +12,6 @@ function UsersTable({ adminObj: { loading, users }, callAllUsers }) {
 
   useEffect(() => {
     callAllUsers();
-    console.log(loading, users);
   }, [callAllUsers]);
 
   useEffect(() => {
@@ -20,7 +19,6 @@ function UsersTable({ adminObj: { loading, users }, callAllUsers }) {
   }, [users]);
 
   useEffect(() => {
-    console.log(searchItem);
     filterData();
   }, [searchItem]);
 
@@ -32,7 +30,6 @@ function UsersTable({ adminObj: { loading, users }, callAllUsers }) {
           return user[key].toString().toLowerCase().includes(searchFilter);
         });
       });
-      console.log(filtering);
       setFilteredData(filtering);
     } else {
       setFilteredData([]);

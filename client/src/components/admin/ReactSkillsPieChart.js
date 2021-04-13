@@ -4,7 +4,6 @@ import ReactApexChart from 'react-apexcharts';
 class UsersPieChart extends Component {
   constructor(props) {
     super(props);
-    console.log('inhere', props.title);
     this.state = {
       options1: {
         chart: {
