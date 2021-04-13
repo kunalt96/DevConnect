@@ -1,10 +1,40 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 
 const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+  const location = useLocation();
+  console.log(location.pathname);
+
+  if (location.pathname.indexOf('/adminComponent') !== -1) {
+    return (
+      <nav className='navbar bg-dark'>
+        <h1>
+          <Link to='/'>
+            <i className='fas fa-code'></i> DevKonnector
+          </Link>
+        </h1>
+        {!loading && (
+          <Fragment>
+            {' '}
+            <ul>
+              <li>
+                <a onClick={logout} href='#!'>
+                  <i className='fas fa-sign-out-alt'>
+                    {' '}
+                    <span className='hide-sm'>Logout</span>
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </Fragment>
+        )}
+      </nav>
+    );
+  }
+
   const authLinks = (
     <ul>
       <li>

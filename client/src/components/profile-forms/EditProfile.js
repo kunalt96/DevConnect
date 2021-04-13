@@ -88,7 +88,9 @@ const EditProfile = ({
   const fileUpload = async () => {
     const imageDataForm = new FormData();
     imageDataForm.append('profilePic', imageData);
+    console.log(imageDataForm);
     try {
+      console.log('in');
       const res = await axios.post('/api/profile/upload', imageDataForm);
       console.log(res.data);
       setFormData({
@@ -98,10 +100,12 @@ const EditProfile = ({
       });
       setAlert('Yo! You got a profile pic', 'success');
       setSpinner(false);
+      setImage(null);
     } catch (err) {
       console.log(err);
       setAlert('Image not uploaded', 'danger');
       setSpinner(false);
+      setImage(null);
     }
   };
 
@@ -147,12 +151,18 @@ const EditProfile = ({
           <input
             className='form-control'
             name='profilePic'
+            id='actual-btn'
+            accept='image/*'
             type='file'
             onChange={(e) => {
               setImage(e.target.files[0]);
               console.log(e.target.files[0]);
             }}
+            hidden
           />
+          <label className='btn btn-primary' htmlFor='actual-btn'>
+            {imageData ? imageData.name : 'Choose Profile Pic'}
+          </label>
           <button
             onClick={() => {
               setSpinner(true);
@@ -176,9 +186,7 @@ const EditProfile = ({
           )}
         </div>
         {profilePicUrl ? (
-          <p className='lead'>
-            You can Upload or Remove Pic. Click on Submit to view changes
-          </p>
+          <p>You can Upload or Remove Pic. Click on Submit to view changes</p>
         ) : (
           <p>It seems there is no profile, Do update one</p>
         )}

@@ -129,7 +129,6 @@ img {
 
 input[name='searchDeveloper'] {
   outline: none;
-  border-radius: 30px;
 }
 
 .btn {
@@ -183,7 +182,7 @@ input[name='searchDeveloper'] {
 .badge-dark,
 .alert-dark {
   background: var(--dark-color);
-  color: #fff;
+  color: white;
 }
 
 .btn-danger,
@@ -255,6 +254,7 @@ input[name='searchDeveloper'] {
 .form input[type='email'],
 .form input[type='password'],
 .form input[type='date'],
+.form input[type='search'],
 .form select,
 .form textarea {
   display: block;

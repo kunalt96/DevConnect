@@ -15,7 +15,7 @@ const Dashboard = ({
   deleteAccount,
 }) => {
   // console;
-
+  console.log(user);
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
