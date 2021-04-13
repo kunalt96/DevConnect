@@ -3,7 +3,6 @@ import ReactApexChart from 'react-apexcharts';
 
 class UsersBarGraph extends Component {
   constructor(props) {
-    console.log('In here');
     super(props);
     this.state = {
       options: {

@@ -5,10 +5,8 @@ import PropTypes from 'prop-types';
 import Profiles from '../profiles/Profiles';
 
 function LoadUsers({ adminObj: { loading, users }, callAllUsers }) {
-  console.log('In here');
   useEffect(() => {
     callAllUsers();
-    console.log(loading, users);
   }, [callAllUsers]);
 
   return <div>HELLO WORLD</div>;

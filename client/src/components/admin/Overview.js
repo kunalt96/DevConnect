@@ -17,8 +17,6 @@ const Overview = ({
     totalImagesUploaded,
   },
 }) => {
-  //   console.log('OVERVIEW CALLED', adminOverview);
-  console.log(loading);
   useEffect(() => {
     getOverViewData();
   }, []);

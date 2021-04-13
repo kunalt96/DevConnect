@@ -27,13 +27,11 @@ function EditUser({
   }, []);
 
   const onSearchText = (value) => {
-    console.log(value);
     setLoading(true);
     editUsersData(value);
   };
 
   useEffect(() => {
-    console.log(retrievedUsers);
     setLoading(false);
     setResult(retrievedUsers);
   }, [retrievedUsers]);
@@ -50,7 +48,6 @@ function EditUser({
   const onEditClick = (user) => {
     setUserId(user._id);
     setEdit(true);
-    console.log(input);
     setData({ email: user.email, name: user.name, id: user._id });
   };
 
@@ -102,7 +99,6 @@ function EditUser({
                         }}
                         value={email}
                         onChange={(e) => {
-                          console.log('h');
                           setData({ ...editData, email: e.target.value });
                         }}
                       ></input>
