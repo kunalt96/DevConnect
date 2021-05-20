@@ -103,8 +103,7 @@ router.post(
     if (bio) profileFields.bio = bio;
     if (status) profileFields.status = status;
     if (githubusername) profileFields.githubusername = githubusername;
-    if (skills)
-      profileFields.skills = skills.split(',').map((value) => value.trim());
+    if (skills) profileFields.skills = skills;
 
     profileFields.profilePic = {};
     if (profilePicUrl) profileFields.profilePic.profilePicUrl = profilePicUrl;
@@ -191,15 +190,8 @@ router.put(
     const errors = validationResult(req);
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
-    const {
-      title,
-      company,
-      location,
-      to,
-      from,
-      description,
-      current,
-    } = req.body;
+    const { title, company, location, to, from, description, current } =
+      req.body;
     const newExp = {
       title,
       company,
@@ -251,15 +243,8 @@ router.put(
     const errors = validationResult(req);
     if (!errors.isEmpty())
       return res.status(400).json({ errors: errors.array() });
-    const {
-      school,
-      degree,
-      fieldofstudy,
-      to,
-      from,
-      description,
-      current,
-    } = req.body;
+    const { school, degree, fieldofstudy, to, from, description, current } =
+      req.body;
     const newEducation = {
       school,
       degree,

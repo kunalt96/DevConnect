@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
 import { setAlert } from '../../actions/alert';
 import axios from 'axios';
+import './CreateProfile.css';
 
 const EditProfile = ({
   profile: { profile, loading },
@@ -20,7 +21,7 @@ const EditProfile = ({
     bio: '',
     status: '',
     githubusername: '',
-    skills: '',
+    skills: [],
     youtube: '',
     facebook: '',
     twitter: '',
@@ -31,6 +32,7 @@ const EditProfile = ({
   });
 
   const [imageData, setImage] = useState(null);
+  const [skillsTag, setSkillTag] = useState([]);
   const [loadSpinner, setSpinner] = useState(false);
 
   const [displaySocialInputs, toggleSocialInput] = useState(false);
@@ -46,7 +48,7 @@ const EditProfile = ({
       status: loading || !profile.status ? '' : profile.status,
       githubusername:
         loading || !profile.githubusername ? '' : profile.githubusername,
-      skills: loading || !profile.skills ? '' : profile.skills.join(),
+      skills: loading || !profile.skills ? [] : profile.skills,
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       twitter: loading || !profile.social ? '' : profile.social.twitter,
       facebook: loading || !profile.social ? '' : profile.social.facebook,
@@ -57,6 +59,8 @@ const EditProfile = ({
       public_id:
         loading || !profile.profilePic ? '' : profile.profilePic.public_id,
     });
+
+    setSkillTag(loading || !profile.skills ? [] : profile.skills);
   }, [getCurrentProfile]);
 
   const {
@@ -82,7 +86,28 @@ const EditProfile = ({
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(formData, 2);
-    createProfile(formData, history, true);
+    // createProfile(formData, history, true);
+    let finalFormData = { ...formData };
+    finalFormData.skills = skillsTag;
+    console.log(finalFormData.skills[0]);
+    console.log(finalFormData);
+    createProfile(finalFormData, history, true);
+  };
+
+  const addTags = (e) => {
+    console.log(e);
+    if (e.key === 'Enter' && e.target.value != '') {
+      setSkillTag([
+        ...skillsTag,
+        e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1),
+      ]);
+      e.target.value = '';
+    }
+  };
+
+  const removeTag = (i) => {
+    console.log(i);
+    setSkillTag([...skillsTag.filter((tag) => skillsTag.indexOf(tag) !== i)]);
   };
 
   const fileUpload = async () => {
@@ -146,7 +171,7 @@ const EditProfile = ({
       )}
       {/* <div className='loader'></div> */}
 
-      <form onSubmit={(e) => onSubmit(e)} className='form'>
+      <form className='form'>
         <div className='form-group'>
           <input
             className='form-control'
@@ -243,7 +268,7 @@ const EditProfile = ({
             City & state suggested (eg. Boston, MA)
           </small>
         </div>
-        <div className='form-group'>
+        {/* <div className='form-group'>
           <input
             value={skills}
             onChange={(e) => onChange(e)}
@@ -254,6 +279,31 @@ const EditProfile = ({
           <small className='form-text'>
             Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
           </small>
+        </div> */}
+        <div className='form-group'>
+          <input
+            type='text'
+            placeholder='* Skills'
+            onKeyDown={(event) => addTags(event)}
+          />
+          <small className='form-text'>
+            After Entering Value, Press enter to see tags
+          </small>
+          <ul>
+            {skillsTag.length > 0 &&
+              skillsTag.map((key, index) => {
+                return (
+                  <li className='input-tag-li' key={index}>
+                    {key}{' '}
+                    <i
+                      onClick={() => removeTag(index)}
+                      className='fas fa-times'
+                      style={{ fontSize: '15px' }}
+                    ></i>
+                  </li>
+                );
+              })}
+          </ul>
         </div>
         <div className='form-group'>
           <input
@@ -349,7 +399,12 @@ const EditProfile = ({
           </>
         )}
 
-        <input type='submit' className='btn btn-primary my-1' />
+        <input
+          onClick={(e) => onSubmit(e)}
+          type='button'
+          value='Update Profile'
+          className='btn btn-primary my-1'
+        />
         <Link className='btn btn-light my-1' to='/dashboard'>
           Go Back
         </Link>

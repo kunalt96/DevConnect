@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { createProfile } from '../../actions/profile';
 import { setAlert } from '../../actions/alert';
 import axios from 'axios';
+import './CreateProfile.css';
 
 const CreateProfile = ({ createProfile, history, setAlert }) => {
   const [formData, setFormData] = useState({
@@ -14,7 +15,7 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
     bio: '',
     status: '',
     githubusername: '',
-    skills: '',
+    skills: [],
     youtube: '',
     facebook: '',
     twitter: '',
@@ -24,8 +25,10 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
     public_id: '',
   });
 
+  const [skillsTag, setSkillTag] = useState([]);
   const [imageData, setImage] = useState(null);
   const [displaySocialInputs, toggleSocialInput] = useState(false);
+  // const [key]
 
   const {
     company,
@@ -48,8 +51,28 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    createProfile(formData, history);
+    console.log(formData, skillsTag);
+    let finalFormData = { ...formData };
+    finalFormData.skills = skillsTag;
+    console.log(finalFormData.skills[0]);
+    console.log(finalFormData);
+    createProfile(finalFormData, history);
+  };
+
+  const addTags = (e) => {
+    console.log(e);
+    if (e.key === 'Enter' && e.target.value != '') {
+      setSkillTag([
+        ...skillsTag,
+        e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1),
+      ]);
+      e.target.value = '';
+    }
+  };
+
+  const removeTag = (i) => {
+    console.log(i);
+    setSkillTag([...skillsTag.filter((tag) => skillsTag.indexOf(tag) !== i)]);
   };
 
   const fileUpload = async () => {
@@ -62,7 +85,7 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
         profilePicUrl: res.data.secure_url,
         public_id: res.data.public_id,
       });
-      setAlert('Yo! You got a profile pic', 'success');
+      setAlert('Yes! You got a profile pic', 'success');
     } catch (err) {
       console.log(err);
       setAlert('Image not uploaded', 'danger');
@@ -77,7 +100,7 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
         profile stand out
       </p>
       <small>* = required field</small>
-      <form onSubmit={(e) => onSubmit(e)} className='form'>
+      <form className='form'>
         <div className='form-group'>
           <input
             name='profilePic'
@@ -149,7 +172,7 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
             City & state suggested (eg. Boston, MA)
           </small>
         </div>
-        <div className='form-group'>
+        {/* <div className='form-group'>
           <input
             value={skills}
             onChange={(e) => onChange(e)}
@@ -160,6 +183,30 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
           <small className='form-text'>
             Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
           </small>
+        </div> */}
+        <div className='form-group'>
+          <input
+            type='text'
+            placeholder='* Skills'
+            onKeyDown={(event) => addTags(event)}
+          />
+          <small className='form-text'>
+            After Entering Value, Press enter to see tags
+          </small>
+          <ul>
+            {skillsTag.map((key, index) => {
+              return (
+                <li className='input-tag-li' key={index}>
+                  {key}{' '}
+                  <i
+                    onClick={() => removeTag(index)}
+                    className='fas fa-times'
+                    style={{ fontSize: '15px' }}
+                  ></i>
+                </li>
+              );
+            })}
+          </ul>
         </div>
         <div className='form-group'>
           <input
@@ -255,7 +302,12 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
           </>
         )}
 
-        <input type='submit' className='btn btn-primary my-1' />
+        <input
+          onClick={(e) => onSubmit(e)}
+          type='button'
+          className='btn btn-primary my-1'
+          value='Submit'
+        />
         <Link className='btn btn-light my-1' to='/dashboard'>
           Go Back
         </Link>
