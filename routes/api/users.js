@@ -4,8 +4,46 @@ const bcrypt = require('bcryptjs');
 const { check, validationResult } = require('express-validator/check');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+var nodemailer = require('nodemailer');
+const emailTemplateLoginConfirmation = require('./emailTemplate');
+require('dotenv').config();
 
 const User = require('../../models/User');
+
+function sendEmailToNewUsers(name, email) {
+  // console.log(name, email);
+  // console.log(process.env.OUTLOOK_EMAIL_ID);
+  var transport = nodemailer.createTransport({
+    service: 'outlook',
+    auth: {
+      user: process.env.OUTLOOK_EMAIL_ID,
+      pass: process.env.OUTLOOK_PASSWORD,
+    },
+  });
+
+  // console.log('in --------- ');
+
+  var mailOptions = {
+    from: 'kunaltiwari55@outlook.com',
+    to: email,
+    bcc: 'kunaltiwari55@outlook.com',
+    subject: `Welcome ${name}`,
+    html: emailTemplateLoginConfirmation(name),
+  };
+
+  // console.log('out ------------------');
+
+  transport.sendMail(mailOptions, function (error, info) {
+    console.log('inhere it is come');
+    if (error) {
+      console.log(error);
+      return false;
+    } else {
+      console.log('Email sent: ' + info.response);
+      return true;
+    }
+  });
+}
 
 // @route POST api/users
 // @desc  Register user route
@@ -47,6 +85,9 @@ router.post(
         { expiresIn: 3600 },
         (error, token) => {
           if (error) throw error;
+          // SEND MAIL TO DIFFERENT PEOPLE NOW HERE
+          sendEmailToNewUsers(name, email);
+          // console.log('in here,,,,,,,,,,,,,,,,,');
           res.json({ token });
         }
       );
