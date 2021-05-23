@@ -27,6 +27,7 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
 
   const [skillsTag, setSkillTag] = useState([]);
   const [imageData, setImage] = useState(null);
+  const [loadSpinner, setSpinner] = useState(false);
   const [displaySocialInputs, toggleSocialInput] = useState(false);
   // const [key]
 
@@ -44,6 +45,7 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
     instagram,
     linkedlin,
     profilePicUrl,
+    public_id,
   } = formData;
 
   const onChange = (e) =>
@@ -78,17 +80,48 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
   const fileUpload = async () => {
     const imageDataForm = new FormData();
     imageDataForm.append('profilePic', imageData);
+    console.log(imageDataForm);
     try {
+      console.log('in');
       const res = await axios.post('/api/profile/upload', imageDataForm);
+      console.log(res.data);
       setFormData({
         ...formData,
         profilePicUrl: res.data.secure_url,
         public_id: res.data.public_id,
       });
-      setAlert('Yes! You got a profile pic', 'success');
+      setAlert(
+        'Yo! You got a profile pic. Click on Create Profile to save changes',
+        'success'
+      );
+      setSpinner(false);
+      setImage(null);
     } catch (err) {
       console.log(err);
       setAlert('Image not uploaded', 'danger');
+      setSpinner(false);
+      setImage(null);
+    }
+  };
+
+  const removeProfilePic = async () => {
+    console.log(public_id);
+    try {
+      axios.delete(`/api/profile/removePic/${public_id}`);
+      setFormData({
+        ...formData,
+        profilePicUrl: null,
+        public_id: null,
+      });
+      setAlert(
+        'Profile Pic removed, Click on Create Profile to save changes',
+        'success'
+      );
+      setSpinner(false);
+    } catch (err) {
+      console.log(err);
+      setAlert('Image not uploaded', 'danger');
+      setSpinner(false);
     }
   };
 
@@ -103,23 +136,48 @@ const CreateProfile = ({ createProfile, history, setAlert }) => {
       <form className='form'>
         <div className='form-group'>
           <input
+            className='form-control'
             name='profilePic'
+            id='actual-btn'
+            accept='image/*'
             type='file'
             onChange={(e) => {
               setImage(e.target.files[0]);
               console.log(e.target.files[0]);
             }}
+            hidden
           />
+          <label className='btn btn-primary' htmlFor='actual-btn'>
+            {imageData ? imageData.name : 'Choose Profile Pic'}
+          </label>
           <button
             onClick={() => {
+              setSpinner(true);
               fileUpload();
             }}
             type='button'
-            className='btn btn-primary'
+            className='btn btn-light'
           >
             Upload Image
-          </button>
+          </button>{' '}
+          {loadSpinner ? <div className='loader-profile'></div> : <></>}
+          {profilePicUrl && (
+            <button
+              onClick={() => {
+                setSpinner(true);
+                removeProfilePic();
+              }}
+              className='btn btn-danger'
+            >
+              Remove Profile Pic
+            </button>
+          )}
         </div>
+        {profilePicUrl ? (
+          <p>You can Upload or Remove Pic. Click on Submit to view changes</p>
+        ) : (
+          <p>It seems there is no profile, Do update one</p>
+        )}
         <div className='form-group'>
           <select name='status' value={status} onChange={(e) => onChange(e)}>
             <option value='0'>* Select Professional Status</option>
