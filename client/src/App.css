@@ -612,6 +612,26 @@ button {
     color: rgb(3, 3, 3);
     width: 70px;
   }
+
+  .loader-profile {
+    border: 8px solid #f3f3f3; /* Light grey */
+    border-top: 8px solid #28a745; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: loaderprofile 1.5s linear infinite;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+
+  @keyframes loaderprofile {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 .loader {
@@ -631,11 +651,32 @@ button {
     transform: rotate(360deg);
   }
 }
-.lds-ripple {
+
+.loader-profile {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #28a745; /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: loaderprofile 1.5s linear infinite;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+@keyframes loaderprofile {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* .lds-ripple {
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 20px;
+  height: 20px;
 }
 .lds-ripple div {
   position: absolute;
@@ -646,8 +687,8 @@ button {
 }
 .lds-ripple div:nth-child(2) {
   animation-delay: -0.5s;
-}
-@keyframes lds-ripple {
+} */
+/* @keyframes lds-ripple {
   0% {
     top: 36px;
     left: 36px;
@@ -662,4 +703,4 @@ button {
     height: 72px;
     opacity: 0;
   }
-}
+} */

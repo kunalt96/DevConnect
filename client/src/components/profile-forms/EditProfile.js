@@ -123,7 +123,10 @@ const EditProfile = ({
         profilePicUrl: res.data.secure_url,
         public_id: res.data.public_id,
       });
-      setAlert('Yo! You got a profile pic', 'success');
+      setAlert(
+        'Yo! You got a profile pic, Click on Update Profile to save changes',
+        'success'
+      );
       setSpinner(false);
       setImage(null);
     } catch (err) {
@@ -143,7 +146,10 @@ const EditProfile = ({
         profilePicUrl: null,
         public_id: null,
       });
-      setAlert('Profile Pic removed', 'success');
+      setAlert(
+        'Profile Pic removed, Click on Update Profile to save changes',
+        'success'
+      );
       setSpinner(false);
     } catch (err) {
       console.log(err);
@@ -161,14 +167,6 @@ const EditProfile = ({
       </p>
       <small>* = required field</small>
       <br />
-      {loadSpinner ? (
-        <div class='lds-ripple'>
-          <div></div>
-          <div></div>
-        </div>
-      ) : (
-        <></>
-      )}
       {/* <div className='loader'></div> */}
 
       <form className='form'>
@@ -198,6 +196,7 @@ const EditProfile = ({
           >
             Upload Image
           </button>
+          {loadSpinner ? <div className='loader-profile'></div> : <></>}
           {profilePicUrl && (
             <button
               onClick={() => {

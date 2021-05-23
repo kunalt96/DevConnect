@@ -31,12 +31,12 @@ const UserProfiles = ({ adminObj: { userProfiles, loading }, getProfiles }) => {
                   <img
                     src={profile.profilePic.profilePicUrl}
                     alt='John'
-                    style={{ width: '100%', height: '300px' }}
+                    style={{ width: '100%', height: '150px' }}
                   />
                 ) : (
                   <img
                     src={AvatarImage}
-                    style={{ width: '100%', height: '300px' }}
+                    style={{ width: '100%', height: '150px' }}
                   ></img>
                 )}
                 <h1>{profile.user.name}</h1>
@@ -57,7 +57,7 @@ const UserProfiles = ({ adminObj: { userProfiles, loading }, getProfiles }) => {
                         >
                           <i
                             style={{ color: 'black' }}
-                            className='fab fa-instagram fa-2x'
+                            className='fab fa-instagram'
                           ></i>
                         </a>
                       )}
@@ -70,7 +70,7 @@ const UserProfiles = ({ adminObj: { userProfiles, loading }, getProfiles }) => {
                         >
                           <i
                             style={{ color: 'black' }}
-                            className='fab fa-twitter fa-2x'
+                            className='fab fa-twitter'
                           ></i>
                         </a>
                       )}
@@ -83,7 +83,7 @@ const UserProfiles = ({ adminObj: { userProfiles, loading }, getProfiles }) => {
                         >
                           <i
                             style={{ color: 'black' }}
-                            className='fab fa-linkedin fa-2x'
+                            className='fab fa-linkedin'
                           ></i>
                         </a>
                       )}
@@ -91,18 +91,15 @@ const UserProfiles = ({ adminObj: { userProfiles, loading }, getProfiles }) => {
                   ) : (
                     <>
                       <p>No social credentials</p>
-                      <br />
                     </>
                   )}
                 </div>
-                <p style={{ marginBottom: '0px' }}>
-                  <a
-                    href={`mailto:${profile.user.email}`}
-                    className='profile-button'
-                  >
-                    Contact
-                  </a>
-                </p>
+                <a
+                  href={`mailto:${profile.user.email}`}
+                  className='profile-button'
+                >
+                  Contact
+                </a>
               </div>
             );
           })}
