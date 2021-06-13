@@ -1,12 +1,44 @@
-import React, { Fragment } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { logout } from '../../actions/auth';
+import React, { Fragment, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { logout } from '../../actions/auth'
+import createConnection from '../../utils/socketioConnection'
+import { showNotifications } from '../../actions/notifications'
+import { removeNotifications, setNotifications } from '../../actions/alert'
 
-const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
-  const location = useLocation();
-  console.log(location.pathname);
+let socket
+const Navbar = ({
+  auth: { isAuthenticated, loading, user },
+  logout,
+  removeNotifications,
+  setNotifications,
+  showNotifications,
+}) => {
+  const location = useLocation()
+  console.log(location.pathname)
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      socket = createConnection(user._id)
+      console.log(socket)
+      socket.on('notification', function (data) {
+        showNotifications(data)
+        setNotifications(
+          'Post uploaded - Check notifications section for more details'
+        )
+        setTimeout(() => {
+          console.log('Clling it')
+          removeNotifications()
+        }, 4000)
+      })
+      return () => {
+        console.log('unmouting myself')
+        socket.emit('disconnectit', { id: user?._id })
+        socket.off()
+      }
+    }
+  }, [isAuthenticated, user])
 
   if (location.pathname.indexOf('/adminComponent') !== -1) {
     return (
@@ -32,7 +64,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           </Fragment>
         )}
       </nav>
-    );
+    )
   }
 
   const authLinks = (
@@ -42,6 +74,14 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
       </li>
       <li>
         <Link to='/posts'>Posts</Link>
+      </li>
+      <li>
+        <Link to='/notifications'>
+          <i class='fas fa-envelope'>
+            {' '}
+            <span className='hide-sm'>Notifications</span>
+          </i>
+        </Link>
       </li>
       <li>
         <Link to='/dashboard'>
@@ -60,7 +100,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </a>
       </li>
     </ul>
-  );
+  )
 
   const guestLinks = (
     <ul>
@@ -74,7 +114,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         <Link to='/login'>Login</Link>
       </li>
     </ul>
-  );
+  )
 
   return (
     <nav className='navbar bg-dark'>
@@ -87,22 +127,25 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
       )}
     </nav>
-  );
-};
+  )
+}
 
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-};
+}
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-});
+})
 
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(logout()),
-  };
-};
+    showNotifications: (data) => dispatch(showNotifications(data)),
+    setNotifications: (msg) => dispatch(setNotifications(msg)),
+    removeNotifications: () => dispatch(removeNotifications()),
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

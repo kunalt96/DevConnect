@@ -16,6 +16,7 @@ import Post from '../post/Post';
 import NotFound from '../layout/NotFound';
 import ResetPassword from '../auth/ResetPassword';
 import AdminComponent from '../admin';
+import Notifications from '../notifications.js';
 
 // Loading all routes to clean up appjs and provide path
 const Routes = () => {
@@ -29,6 +30,7 @@ const Routes = () => {
         <Route exact path='/profiles' component={Profiles} />
         <Route exact path='/profile/:id' component={Profile} />
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
+        <PrivateRoute exact path='/notifications' component={Notifications} />
         <PrivateRoute exact path='/create-profile' component={CreateProfile} />
         <PrivateRoute exact path='/edit-profile' component={EditProfile} />
         <PrivateRoute

@@ -7,6 +7,10 @@ import { Link } from 'react-router-dom';
 import DashboardActions from './DashboardActions';
 import Experience from './Experience';
 import Education from './Education';
+// import createConnection from '../../utils/socketioConnection';
+// import { showNotifications } from '../../actions/notifications';
+
+// let socket;
 
 const Dashboard = ({
   getCurrentProfile,
@@ -19,6 +23,12 @@ const Dashboard = ({
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
+
+  // useEffect(() => {
+  //   socket.on('notification', function (data) {
+  //     showNotifications(data);
+  //   });
+  // }, []);
 
   return loading && profile === null ? (
     <Spinner />
@@ -69,6 +79,7 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile, deleteAccount })(
-  Dashboard
-);
+export default connect(mapStateToProps, {
+  getCurrentProfile,
+  deleteAccount,
+})(Dashboard);

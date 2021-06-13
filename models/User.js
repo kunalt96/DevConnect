@@ -21,5 +21,11 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  notificationMessage: [
+    {
+      message: String,
+      notificationDate: String,
+    },
+  ],
 });
 module.exports = User = mongoose.model('user', UserSchema);

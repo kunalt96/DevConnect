@@ -19,6 +19,8 @@ const App = () => {
     store.dispatch(loadUser());
   }, []);
 
+  console.log('its me here');
+
   return (
     <Provider store={store}>
       <Router>
