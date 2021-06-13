@@ -56,3 +56,8 @@ Profiles:
 ![profile of user](https://user-images.githubusercontent.com/46222650/114574191-a9a32180-9c96-11eb-8f73-7602d111c803.png)
 
 Profiles of users in card, more updates can be expected with respect to UI in this section in coming days, Contact functioanlity to mail the respective users
+
+## Version 5.0.0
+
+The majour development of version 5.0.0 is the feature of notifications to the user that are currently online. The features uses Socket.io (Web Sockets) for real time data transfer. User dont have to refresh the pages or so to receive the notifcations. Also Now the skill adding section have tags, so this provides more visibility of there skills to them. Just type a skill and press enter to see the changes. Also anyone joining new will be greeted with a welcome mail as well. Better ui in Create profile section, better animations up there.
+This version is currently not deployed on heroku, To see this version live please fork the repo, install node_modules in both frontend and backend, and see the version 5 changes
